@@ -63,17 +63,21 @@ int rena::cppfignore::parse(){
             {
                 regex_temp_str += ".";
             }
-            else if ( this_line[i] == '.' )
+            else if ( this_line[i] == '.'  ||
+                      this_line[i] == '\\' ||
+                      this_line[i] == '$'  ||
+                      this_line[i] == '('  ||
+                      this_line[i] == ')'  ||
+                      this_line[i] == '['  ||
+                      this_line[i] == ']'  ||
+                      this_line[i] == '{'  ||
+                      this_line[i] == '}'  ||
+                      this_line[i] == '^'  ||
+                      this_line[i] == '+'  ||
+                      this_line[i] == '|' )
             {
-                regex_temp_str += "\\.";
-            }
-            else if ( this_line[i] == '\\' )
-            {
-                regex_temp_str += "\\\\";
-            }
-            else if ( this_line[i] == '$' )
-            {
-                regex_temp_str += "\\$";
+                regex_temp_str += "\\";
+                regex_temp_str += this_line[i];
             }
             else
             {
@@ -112,7 +116,6 @@ bool rena::cppfignore::check( std::filesystem::path path ){
             return true;
         }
     }
-    
     return false;
 }
 
